@@ -42,6 +42,13 @@ bili2text 是一个用于将 Bilibili 视频转换为文本的工具🛠️。�
 
    在提示时输入 Bilibili 视频的 av 号。
 
+4. **使用UI界面**：
+   ```bash
+   python window.py
+   ```
+
+   在弹出的窗口中输入视频链接，会自动转换为av号，点击下载视频按钮即可完成文件转换。
+
 ## 示例 📋
 ```python
 from downBili import download_video
@@ -55,6 +62,18 @@ run_analysis(foldername, prompt="以下是普通话的句子。这是一个关�
 output_path = f"outputs/{foldername}.txt"
 print("转换完成！", output_path)
 ```
+
+## 技术栈 🧰
+- [Python](https://www.python.org/) 主要编程语言，负责实现程序逻辑功能
+- [Whisper](https://github.com/openai/whisper) 语音转文字模型
+- [Tkiner](https://docs.python.org/3/library/tkinter.html) UI界面展示相关工具
+- [TTKbootstrap](https://ttkbootstrap.readthedocs.io/en/latest/zh/) UI界面美化库
+
+## 后续开发计划 📅
+
+- [X] 生成requirements.txt
+- [X] UI化设计
+
 
 ## 运行截图 📷
 <!-- assets/screenshot1.png -->
@@ -70,8 +89,3 @@ print("转换完成！", output_path)
 
 ## 致谢 🙏
 再此感谢Open Teens对青少年开源社区做出的贡献！[@OpenTeens](https://openteens.org)
-
-## 后续开发计划 📅
-
-- [X] 生成requirements.txt
-- [X] UI化设计
