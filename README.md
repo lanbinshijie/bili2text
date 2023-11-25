@@ -73,5 +73,5 @@ print("转换完成！", output_path)
 
 ## 后续开发计划 📅
 
-- [ ] 生成requirements.txt
+- [X] 生成requirements.txt
 - [X] UI化设计
