@@ -26,7 +26,24 @@ def get_play_list(start_url, cid, quality):
     # print(video_list)
     return video_list
 
+def bv2av(bv):
+    table = 'fZodR9XQDSUm21yCkr6zBqiveYah8bt4xsWpHnJE7jL5VG3guMTKNPAwcF'
+    tr = {}
+    for i in range(58):
+        tr[table[i]] = i
+    s = [11,10,3,8,4,6]
+    xor = 177451812
+    add = 8728348608
+
+    r=0
+    for i in range(6):
+        r+=tr[bv[s[i]]]*58**i
+    return (r-add)^xor
+
+
 def Schedule_cmd(blocknum, blocksize, totalsize):
+    pass
+
     speed = (blocknum * blocksize) / (time.time() - start_time)
     # speed_str = " Speed: %.2f" % speed
     speed_str = " Speed: %s" % format_size(speed)
