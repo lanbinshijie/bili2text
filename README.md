@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="95b516be-4e03-4678-803f-e58107690dc0.png" alt="bili2text logo" width="400"/>
+  <img src="light_logo.png" alt="bili2text logo" width="400"/>
 </p>
 
 
-<p style="text-align:center">
+<p align="center">
     <img src="https://img.shields.io/github/stars/lanbinshijie/bili2text" alt="GitHub stars"/>
     <img src="https://img.shields.io/github/license/lanbinshijie/bili2text" alt="GitHub"/>
     <img src="https://img.shields.io/github/last-commit/lanbinshijie/bili2text" alt="GitHub last commit"/>
