@@ -1,2 +1,71 @@
-# bili2text
-Bilibili视频转文字，一步到位，输入链接即可使用
+<p align="center">
+  <img src="95b516be-4e03-4678-803f-e58107690dc0.png" alt="bili2text logo" width="400"/>
+</p>
+
+
+<p style="text-align:center">
+    <img src="https://img.shields.io/github/stars/lanbinshijie/bili2text" alt="GitHub stars"/>
+    <img src="https://img.shields.io/github/license/lanbinshijie/bili2text" alt="GitHub"/>
+    <img src="https://img.shields.io/github/last-commit/lanbinshijie/bili2text" alt="GitHub last commit"/>
+    <img src="https://img.shields.io/github/v/release/lanbinshijie/bili2text" alt="GitHub release (latest by date)"/>
+</p>
+
+# Bili2text 📺
+
+## 简介 🌟
+bili2text 是一个用于将 Bilibili 视频转换为文本的工具🛠️。这个项目通过一个简单的流程实现：下载视频、提取音频、分割音频，并使用 whisper 模型将语音转换为文本。整个过程是自动的，只需输入 Bilibili 视频的 av 号即可。整个过程行云流水，一步到胃😂
+
+## 功能 🚀
+- 🎥**下载视频**：从 Bilibili 下载指定的视频。
+- 🎵**提取音频**：从下载的视频中提取音频。
+- 💬**音频分割**：将音频分割成小段，以便于进行高效的语音转文字处理。
+- 🤖**语音转文字**：使用 OpenAI 的 whisper 模型将音频转换为文本。
+
+## 使用方法 📘
+1. **克隆仓库**：
+   ```bash
+   git clone https://github.com/lanbinshijie/bili2text.git
+   cd bili2text
+   ```
+
+2. **安装依赖**：
+   安装必要的 Python 库。
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **运行脚本**：
+   使用 Python 运行 `main.py` 脚本。
+   ```python
+   python main.py
+   ```
+
+   在提示时输入 Bilibili 视频的 av 号。
+
+## 示例 📋
+```python
+from downBili import download_video
+from exAudio import *
+from speech2text import *
+
+av = input("请输入av号：")
+filename = download_video(av)
+foldername = run_split(filename)
+run_analysis(foldername, prompt="以下是普通话的句子。这是一个关于{}的视频。".format(filename))
+output_path = f"outputs/{foldername}.txt"
+print("转换完成！", output_path)
+```
+
+## 许可证 📄
+本项目根据 MIT 许可证发布。
+
+## 贡献 💡
+如果你想为这个项目做出贡献，欢迎提交 Pull Request 或创建 Issue。
+
+## 致谢 🙏
+再此感谢Open Teens对青少年开源社区做出的贡献！[@OpenTeens](https://openteens.org)
+
+## 后续开发计划 📅
+
+- [ ] 生成requirements.txt
+- [ ] UI化设计
