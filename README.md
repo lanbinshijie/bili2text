@@ -56,6 +56,12 @@ output_path = f"outputs/{foldername}.txt"
 print("转换完成！", output_path)
 ```
 
+## 运行截图 📷
+<!-- assets/screenshot1.png -->
+<img src="assets/screenshot3.png" alt="screenshot3" width="600"/>
+<img src="assets/screenshot2.png" alt="screenshot2" width="600"/>
+<img src="assets/screenshot1.png" alt="screenshot1" width="600"/>
+
 ## 许可证 📄
 本项目根据 MIT 许可证发布。
 
@@ -68,4 +74,4 @@ print("转换完成！", output_path)
 ## 后续开发计划 📅
 
 - [ ] 生成requirements.txt
-- [ ] UI化设计
+- [X] UI化设计
