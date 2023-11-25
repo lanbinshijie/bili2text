@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="light_logo.png" alt="bili2text logo" width="400"/>
+  <img src="light_logo2.png" alt="bili2text logo" width="400"/>
 </p>
 
 
