@@ -117,12 +117,13 @@ def on_select_model():
     selected_model = model_var.get()
     # TODO: 实现模型选择的逻辑
     print(f"选中的模型: {selected_model}")
+    print("请点击加载Whisper按钮加载模型！")
 
 def on_confirm_model():
     # 获取选中的模型
     selected_model = model_var.get()
-    # TODO: 实现确认模型的逻辑
     print(f"确认的模型: {selected_model}")
+    print("请点击加载Whisper按钮加载模型！")
 
 def load_whisper():
     global s2t
@@ -136,6 +137,9 @@ def load_whisper():
 app = ttk.Window("Bili2Text - By Lanbin | www.lanbin.top", themename="litera")
 # 设置窗口大小820x540
 app.geometry("820x540")
+# 设置icon
+app.iconbitmap("favicon.ico")
+
 
 # 应用名
 ttk.Label(app, text="Bilibili To Text", font=("Helvetica", 16)).pack(pady=10)
