@@ -161,3 +161,15 @@ cython_debug/
 
 .vscode/
 .vscode
+
+# Temp Folder
+bilibili_video
+bilibili_video/
+
+# Temp folder
+audio
+audio/
+
+# Temp folder
+outputs
+outputs/
