@@ -2,13 +2,17 @@ import whisper
 import os
 from tqdm import tqdm
 whisper_model = None
+transcribe_kwargs: dict[str, Optional[str]] = {
+    'language': None,
+    # 'language': 'zh',
+}
 
 def load_whisper(model="tiny"):
     global whisper_model
     whisper_model = whisper.load_model(model)
     print("Whisper模型："+model)
 
-def run_analysis(filename, model="tiny", prompt="以下是普通话的句子。"):
+def run_analysis(filename, model="tiny", prompt="以下是普通话的句子。", **transcribe_kwargs):
     global whisper_model
     print("正在加载Whisper模型...")
     # 读取列表中的音频文件
@@ -22,7 +26,7 @@ def run_analysis(filename, model="tiny", prompt="以下是普通话的句子。"
     for fn in audio_list:
         print(f"正在转换第{i}/{len(audio_list)}个音频...")
         # 识别音频
-        result = whisper_model.transcribe(f"audio/slice/{filename}/{fn}", initial_prompt=prompt)
+        result = whisper_model.transcribe(f"audio/slice/{filename}/{fn}", initial_prompt=prompt, **transcribe_kwargs)
         print("".join([i["text"] for i in result["segments"] if i is not None]))
 
         with open(f"outputs/{filename}.txt", "a", encoding="utf-8") as f:
