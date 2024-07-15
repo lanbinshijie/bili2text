@@ -102,7 +102,7 @@ def format_size(bytes):
 def down_video(video_list, title, start_url, page):
     num = 1
     print('[正在下载P{}段视频,请稍等...]:'.format(page) + title)
-    currentVideoPath = os.path.join(sys.path[0], 'bilibili_video', title)  # 当前目录作为下载目录
+    currentVideoPath = os.path.join(sys.path[0], 'bilibili_video', md5_foldername(title))  # 当前目录作为下载目录
     for i in video_list:
         opener = urllib.request.build_opener()
         # 请求头
@@ -123,9 +123,9 @@ def down_video(video_list, title, start_url, page):
             os.makedirs(currentVideoPath)
         # 开始下载
         if len(video_list) > 1:
-            urllib.request.urlretrieve(url=i, filename=os.path.join(currentVideoPath, r'{}-{}.flv'.format(title, num)),reporthook=Schedule_cmd)  # 写成mp4也行  title + '-' + num + '.flv'
+            urllib.request.urlretrieve(url=i, filename=os.path.join(currentVideoPath, r'{}-{}.flv'.format(md5_foldername(title), num)),reporthook=Schedule_cmd)  # 写成mp4也行  title + '-' + num + '.flv'
         else:
-            urllib.request.urlretrieve(url=i, filename=os.path.join(currentVideoPath, r'{}.flv'.format(title)),reporthook=Schedule_cmd)  # 写成mp4也行  title + '-' + num + '.flv'
+            urllib.request.urlretrieve(url=i, filename=os.path.join(currentVideoPath, r'{}.flv'.format(md5_foldername(title))),reporthook=Schedule_cmd)  # 写成mp4也行  title + '-' + num + '.flv'
         num += 1
 
 # 合并视频
@@ -162,7 +162,13 @@ def combine_video(video_list, title):
 
 start_time = 0
 
-def download_video(avnum=None, quality_=16) -> str:
+def md5_foldername(filename):
+    import hashlib
+    m = hashlib.md5()
+    m.update(filename.encode("utf-8"))
+    return m.hexdigest()[:8]
+
+def download_video(avnum=None, download=True, quality_=16) -> str:
     global start_time
     print('*' * 30 + 'B站视频下载小助手' + '*' * 30)
     start = input('请输入您要下载的B站av号或者视频链接地址:') if not avnum else avnum
@@ -174,6 +180,7 @@ def download_video(avnum=None, quality_=16) -> str:
     # 获取视频的cid,title
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36'}
     html = requests.get(start_url, headers=headers).json()
+    # print(html)
     data = html['data']
     video_title=data["title"].replace(" ","_")
     cid_list = []
@@ -199,8 +206,10 @@ def download_video(avnum=None, quality_=16) -> str:
         start_url = start_url + "/?p=" + page
         video_list = get_play_list(start_url, cid, quality)
         start_time = time.time()
+        if not download:
+            return md5_foldername(title)
         down_video(video_list, title, start_url, page)
         combine_video(video_list, title)
 
     print('[下载完成]')
-    return video_title
+    return md5_foldername(title)
