@@ -15,7 +15,7 @@ def flv_mp3(name, target_name=None, folder='bilibili_video'):
 
 
 
-def split_mp3(filename, folder_name, slice_length=60000, target_folder="audio/slice"):
+def split_mp3(filename, folder_name, slice_length=45000, target_folder="audio/slice"):
     # 加载MP3文件
     audio = AudioSegment.from_mp3(filename)
 
