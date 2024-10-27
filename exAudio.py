@@ -5,7 +5,7 @@ import time
 
 def flv_mp3(name, target_name=None, folder='bilibili_video'):
     # 将FLV视频文件加载为一个VideoFileClip对象
-    clip = VideoFileClip(f'{folder}/{name}/{name}.flv')
+    clip = VideoFileClip(f'{folder}/{name}.mp4')
     # 提取音频部分
     audio = clip.audio
     # 创建audio/conv文件夹（如果不存在
@@ -39,12 +39,14 @@ def split_mp3(filename, folder_name, slice_length=45000, target_folder="audio/sl
         slice.export(slice_path, format="mp3")
         print(f"Slice {i} saved: {slice_path}")
 
-# 使用示例
+# 运行切割函数
 def run_split(name):
     folder_name = f"{time.strftime('%Y%m%d%H%M%S')}"
+
+    # 运行转换
     flv_mp3(name, target_name=folder_name)
+
+    # 运行切割
     split_mp3(f"audio/conv/{folder_name}.mp3", folder_name)
     return folder_name
 
-if __name__ == '__main__':
-    print(run_split("梦想中的截图工具，终于有人做出来了！"))
