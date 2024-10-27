@@ -1,12 +1,15 @@
 import whisper
 import os
 from tqdm import tqdm
+
 whisper_model = None
 
+def is_cuda_available():
+    return whisper.torch.cuda.is_available()
 
 def load_whisper(model="tiny"):
     global whisper_model
-    whisper_model = whisper.load_model(model, device="cuda")
+    whisper_model = whisper.load_model(model, device="cuda" if is_cuda_available() else "cpu")
     print("Whisper模型："+model)
 
 def run_analysis(filename, model="tiny", prompt="以下是普通话的句子。"):
@@ -31,5 +34,3 @@ def run_analysis(filename, model="tiny", prompt="以下是普通话的句子。"
             f.write("\n")
         i += 1
     
-
-# run_analysis("20231125133459")
