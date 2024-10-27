@@ -1,6 +1,5 @@
 import whisper
 import os
-from tqdm import tqdm
 
 whisper_model = None
 
