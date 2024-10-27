@@ -12,7 +12,9 @@
 
 # Bili2text 📺
 
-注意⚠️ 本仓库很久没有更新了，不保证Whisper能否继续使用，如有技术的大佬可以试试把新写的讯飞请求完善一下！
+注意⚠️ 本仓库很久没有更新了，不保证Whisper能否继续使用。因为之前电脑错误，我本地的开发环境无法找回，所以很多问题不一定能解决。
+
+Whisper仓库目前更新较多，本仓库选择的是8个月以前的版本，不保证能继续使用。还有一个方案是使用讯飞星火的识别或者其他Speech To Text的服务，通过网络请求上传音频识别并获取返回结果。如有技术的大佬可以试试完善一下这些接口提提PR！
 
 ## 简介 🌟
 bili2text 是一个用于将 Bilibili 视频转换为文本的工具🛠️。这个项目通过一个简单的流程实现：下载视频、提取音频、分割音频，并使用 whisper 模型将语音转换为文本。整个过程是自动的，只需输入 Bilibili 视频的 av 号即可。整个过程行云流水，一步到胃😂
@@ -82,6 +84,11 @@ print("转换完成！", output_path)
 <img src="assets/screenshot3.png" alt="screenshot3" width="600"/>
 <img src="assets/screenshot2.png" alt="screenshot2" width="600"/>
 <img src="assets/screenshot1.png" alt="screenshot1" width="600"/>
+
+## Star History ⭐
+
+<img src="https://github.com/user-attachments/assets/fd16f703-68b5-463d-abca-4ce6d627bd98" width="600">
+
 
 ## 许可证 📄
 本项目根据 MIT 许可证发布。
