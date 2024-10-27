@@ -5,6 +5,7 @@ import requests, time, hashlib, urllib.request, re, json
 from moviepy.editor import *
 import os, sys
 
+HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36'}
 
 # 访问API地址
 def get_play_list(start_url, cid, quality):
@@ -18,8 +19,9 @@ def get_play_list(start_url, cid, quality):
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36'
     }
     # print(url_api)
-    html = requests.get(url_api, headers=headers).json()
-    # print(json.dumps(html))
+    # html = requests.get(url_api, headers=headers).json()
+    html = requests.get(url_api, headers=headers)
+    print(html.content)
     video_list = []
     for i in html['durl']:
         video_list.append(i['url'])
@@ -168,11 +170,73 @@ def md5_foldername(filename):
     m.update(filename.encode("utf-8"))
     return m.hexdigest()[:8]
 
-def download_video(avnum=None, download=True, quality_=16) -> str:
+def download_video(bv_number):
+    try:
+        # Step 1: 请求元数据
+        meta_url = f"https://bili.zhouql.vip/meta/{bv_number}"
+        meta_response = requests.get(meta_url)
+        meta_data = meta_response.json()
+        
+        # 检查元数据请求是否成功
+        if meta_data["code"] != 0:
+            print("元数据请求失败:", meta_data["message"])
+            return
+        
+        # 提取cid和aid
+        cid = meta_data["data"]["cid"]
+        aid = meta_data["data"]["aid"]
+        print(f"获取的cid: {cid}, aid: {aid}")
+        
+        # Step 2: 请求下载链接
+        download_url = f"https://bili.zhouql.vip/download/{aid}/{cid}"
+        download_response = requests.get(download_url)
+        download_data = download_response.json()
+        
+        # 检查下载链接请求是否成功
+        if download_data["code"] != 0:
+            print("下载链接请求失败:", download_data["message"])
+            return
+        
+        # 获取视频下载URL
+        video_url = download_data["data"]["durl"][0]["url"]
+        print(f"视频下载链接: {video_url}")
+        
+        # Step 3: 下载视频
+        video_response = requests.get(video_url, stream=True, headers=HEADERS)
+        
+        # 定义保存视频的文件名
+        file_name = fr"bilibili_video\{bv_number}.mp4"
+        
+                # 获取总大小
+        total_size = int(video_response.headers.get('content-length', 0))
+        downloaded_size = 0  # 已下载大小
+        
+        # 保存视频到本地并显示进度条
+        with open(file_name, "wb") as file:
+            for chunk in video_response.iter_content(chunk_size=1024):
+                if chunk:
+                    file.write(chunk)
+                    downloaded_size += len(chunk)
+                    
+                    # 计算进度
+                    percent_complete = downloaded_size / total_size * 100
+                    # 打印进度条
+                    progress = int(percent_complete // 2)  # 控制进度条宽度
+                    sys.stdout.write(f"\r下载进度: [{'#' * progress}{' ' * (50 - progress)}] {percent_complete:.2f}%")
+                    sys.stdout.flush()
+        
+        print(f"\n视频已成功下载到: {file_name}")
+        return bv_number
+
+        
+    except Exception as e:
+        print("发生错误:", str(e))
+
+def download_videoOLD(avnum=None, download=True, quality_=16) -> str:
     global start_time
     print('*' * 30 + 'B站视频下载小助手' + '*' * 30)
     start = input('请输入您要下载的B站av号或者视频链接地址:') if not avnum else avnum
-    start_url = 'https://api.bilibili.com/x/web-interface/view?aid=' + start
+    start_url = 'https://api.bilibili.com/x/web-interface/view?bvid=' + start
 
     # 视频质量
     quality = input('请输入您要下载视频的清晰度(1080p:80;720p:64;480p:32;360p:16)(填写80或64或32或16):') if quality_ != 16 else quality_
