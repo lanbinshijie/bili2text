@@ -46,7 +46,7 @@ def download_video(bv_number):
         # 定义保存视频的文件名
         file_name = fr"bilibili_video\{bv_number}.mp4"
         
-                # 获取总大小
+        # 获取总大小
         total_size = int(video_response.headers.get('content-length', 0))
         downloaded_size = 0  # 已下载大小
         
@@ -61,8 +61,9 @@ def download_video(bv_number):
                     percent_complete = downloaded_size / total_size * 100
                     # 打印进度条
                     progress = int(percent_complete // 2)  # 控制进度条宽度
-                    sys.stdout.write(f"\r下载进度: [{'#' * progress}{' ' * (50 - progress)}] {percent_complete:.2f}%")
-                    sys.stdout.flush()
+                    if int(percent_complete) % 5 == 0:
+                        sys.stdout.write(f"\r下载进度: [{'#' * progress}{' ' * (50 - progress)}] {percent_complete:.2f}%")
+                        sys.stdout.flush()
         
         print(f"\n视频已成功下载到: {file_name}")
         return bv_number

@@ -3,7 +3,7 @@ from ttkbootstrap.constants import *
 import webbrowser
 import re
 import sys, os
-from downBili import download_video, bv2av
+from downBili import download_video
 from exAudio import *
 import threading
 s2t = None
@@ -78,9 +78,8 @@ def on_submit():
 
     print(f"视频链接: {video_link}")
     print(f"BV号: {match}")
-    av = bv2av(match)
-    print(f"AV号: {av}")
-    thread = threading.Thread(target=process_video, args=(av,))
+    bv = match
+    thread = threading.Thread(target=process_video, args=(bv[2:],))
     thread.start()
 
 
