@@ -61,7 +61,8 @@ def download_video(bv_number):
                     percent_complete = downloaded_size / total_size * 100
                     # 打印进度条
                     progress = int(percent_complete // 2)  # 控制进度条宽度
-                    if int(percent_complete) % 5 == 0:
+                    if int(round(percent_complete,2)*100) % 100 == 0:
+                        # print(int(round(percent_complete,2)*100))
                         sys.stdout.write(f"\r下载进度: [{'#' * progress}{' ' * (50 - progress)}] {percent_complete:.2f}%")
                         sys.stdout.flush()
         
