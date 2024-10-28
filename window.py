@@ -8,7 +8,9 @@ from exAudio import *
 import threading
 s2t = None
 
-def open_popup(text, title="提示") -> ["cancelled", "confirmed"]:
+def is_cuda_available(whisper):
+    return whisper.torch.cuda.is_available()
+def open_popup(text, title="提示"):
     # 在屏幕中央显示弹窗
     # 创建一个弹窗
     popup = ttk.Toplevel()
@@ -61,7 +63,7 @@ def showlog(text, state="INFO"):
 
 def on_submit():
     if s2t == None:
-        print("Whisper未加载！")
+        print("Whisper未加载！为了避免错误，请先点击右上角的加载Whisper按钮！")
         return
     # 获取视频链接
     video_link = video_link_entry.get()
@@ -130,6 +132,7 @@ def load_whisper():
     s2t = speech2text
     s2t.load_whisper(model=model_var.get())
     print("加载Whisper成功！")
+    print("使用了"+ ("CUDA计算单元提取，您的电脑可用显卡加速" if is_cuda_available(s2t.whisper) else "CPU 计算，您的电脑不支持显卡加速"))
 
 
 # 创建窗口
@@ -191,7 +194,7 @@ author_label = ttk.Label(footer_frame, text="作者：Lanbin")
 author_label.pack(side=LEFT, padx=10, pady=10)
 
 # 版本号 - 可以动态修改
-versionVar = ttk.StringVar(value="1.0.0")
+versionVar = ttk.StringVar(value="1.1.0")
 version_label = ttk.Label(footer_frame, text="版本 " + versionVar.get(), foreground="gray")
 version_label.pack(side=LEFT, padx=10, pady=10)
 
