@@ -3,6 +3,14 @@ from pydub import AudioSegment
 import os
 import time
 
+def check_folder():
+    # 检查文件夹是否被创建：
+    if not os.path.exists("bilibili_video"):
+        os.makedirs("bilibili_video")
+
+    if not os.path.exists("outputs"):
+        os.makedirs("outputs")
+
 def flv_mp3(name, target_name=None, folder='bilibili_video'):
     # 将FLV视频文件加载为一个VideoFileClip对象
     clip = VideoFileClip(f'{folder}/{name}.mp4')
