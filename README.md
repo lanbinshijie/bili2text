@@ -12,17 +12,6 @@
 
 # Bili2text 📺
 
-针对Issue中提出的问题，作者很快会一个一个解决。
-
-预计11月初会出一个详细的教学，同时新版本发布！
-
-感谢大家一年多来的支持！
-
-本地测试已经成功~ 很快就可以发布！
-
-![alt text](./assets/new_v_sc.png)
-
-！！**目前讯飞功能暂未实现**
 
 ## 简介 🌟
 bili2text 是一个用于将 Bilibili 视频转换为文本的工具🛠️。这个项目通过一个简单的流程实现：下载视频、提取音频、分割音频，并使用 whisper 模型将语音转换为文本。整个过程是自动的，只需输入 Bilibili 视频的 av 号即可。整个过程行云流水，一步到胃😂
@@ -95,7 +84,7 @@ print("转换完成！", output_path)
 
 ## Star History ⭐
 
-<img src="https://github.com/user-attachments/assets/fd16f703-68b5-463d-abca-4ce6d627bd98" width="600">
+<img src="./assets/StarHistory.png" width="600">
 
 
 ## 许可证 📄
@@ -106,3 +95,9 @@ print("转换完成！", output_path)
 
 ## 致谢 🙏
 再此感谢Open Teens对青少年开源社区做出的贡献！[@OpenTeens](https://openteens.org)
+
+## 使用须知 🖥️
+
+**用户在使用 bili2text 工具时，必须遵守用户所在地区的相关版权法律和规定。请确保您有权利下载和转换的视频内容，尊重创作者的劳动成果。**
+
+**技术无罪，但人心不义。**
