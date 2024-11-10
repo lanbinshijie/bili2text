@@ -43,7 +43,7 @@ def open_popup(text, title="提示"):
         user_choice.set("confirmed")
         popup.destroy()
 
-    confirm_button = ttk.Button(popup, text="确��", style="primary.TButton", command=on_confirm)
+    confirm_button = ttk.Button(popup, text="确定", style="primary.TButton", command=on_confirm)
     confirm_button.pack(side=LEFT, padx=10, pady=10)
 
     # 取消按钮
