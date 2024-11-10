@@ -176,13 +176,19 @@ def check_font(font_name):
     else:
         print(f"字体 {font_name} 已存在。")
 
+def choose_ico():
+    system = platform.system()
+    if system == "Linux":
+        app.iconbitmap("@favicon.xbm")
+    else:
+        app.iconbitmap("favicon.ico")
+    
 # 创建窗口
 app = ttk.Window("Bili2Text - By Lanbin | www.lanbin.top", themename="litera")
 # 设置窗口大小820x540
 app.geometry("820x540")
 # 设置icon
-app.iconbitmap("favicon.ico")
-
+choose_ico()
 
 # 应用名
 ttk.Label(app, text="Bilibili To Text", font=("Helvetica", 16)).pack(pady=10)
