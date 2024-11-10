@@ -6,10 +6,17 @@ import sys, os
 from downBili import download_video
 from exAudio import *
 import threading
+import subprocess
+import platform
 s2t = None
 
 def is_cuda_available(whisper):
     return whisper.torch.cuda.is_available()
+
+def is_gpu_available():
+    import torch
+    return torch.cuda.is_available() or (platform.system() == 'Darwin' and torch.backends.mps.is_available())
+
 def open_popup(text, title="提示"):
     # 在屏幕中央显示弹窗
     # 创建一个弹窗
@@ -36,7 +43,7 @@ def open_popup(text, title="提示"):
         user_choice.set("confirmed")
         popup.destroy()
 
-    confirm_button = ttk.Button(popup, text="确定", style="primary.TButton", command=on_confirm)
+    confirm_button = ttk.Button(popup, text="确��", style="primary.TButton", command=on_confirm)
     confirm_button.pack(side=LEFT, padx=10, pady=10)
 
     # 取消按钮
@@ -131,9 +138,43 @@ def load_whisper():
     import speech2text
     s2t = speech2text
     s2t.load_whisper(model=model_var.get())
+    device = s2t.get_available_device()
     print("加载Whisper成功！")
-    print("使用了"+ ("CUDA计算单元提取，您的电脑可用显卡加速" if is_cuda_available(s2t.whisper) else "CPU 计算，您的电脑不支持显卡加速"))
+    print(f"使用了{device.upper()}计算单元提取，您的电脑{'可用显卡加速' if device != 'cpu' else '不支持显卡加速'}")
 
+def check_and_install_font(font_name, font_url):
+    from tkinter import font
+    if font_name not in font.families():
+        print(f"字体 {font_name} 不存在，正在安装...")
+        system = platform.system()
+        if system == "Windows":
+            font_path = os.path.join(os.environ['WINDIR'], 'Fonts', font_name + '.ttf')
+            if not os.path.exists(font_path):
+                os.system(f'powershell -Command "Invoke-WebRequest -Uri {font_url} -OutFile \'{font_path}\'"')
+                print(f"字体 {font_name} 已安装")
+        elif system == "Darwin":
+            font_path = os.path.expanduser("~/Library/Fonts/" + font_name + ".ttf")
+            if not os.path.exists(font_path):
+                os.system(f'curl -o "{font_path}" {font_url}')
+                print(f"字体 {font_name} 已安装")
+        elif system == "Linux":
+            font_path = os.path.expanduser("~/.local/share/fonts/" + font_name + ".ttf")
+            if not os.path.exists(font_path):
+                os.makedirs(os.path.dirname(font_path), exist_ok=True)
+                os.system(f'wget -O "{font_path}" {font_url}')
+                subprocess.run(["fc-cache", "-fv"])
+                print(f"字体 {font_name} 已安装")
+        else:
+            print("不支持的系统，无法安装字体")
+    else:
+        print(f"字体 {font_name} 已存在")
+
+def check_font(font_name):
+    from tkinter import font
+    if font_name not in font.families():
+        print(f"字体 {font_name} 不存在，请安装该字体以获得最佳显示效果。")
+    else:
+        print(f"字体 {font_name} 已存在。")
 
 # 创建窗口
 app = ttk.Window("Bili2Text - By Lanbin | www.lanbin.top", themename="litera")
@@ -221,5 +262,7 @@ def fn_SYSTEM_IO_REDIRECT():
 # 调用此函数以开始重定向输出
 fn_SYSTEM_IO_REDIRECT()
 
+# 调用检测字体的函数
+check_and_install_font("Helvetica", "./Helvetica.ttc")
 
 app.mainloop()
