@@ -1,15 +1,22 @@
+import platform
 import whisper
 import os
+import torch
 
 whisper_model = None
 
-def is_cuda_available():
-    return whisper.torch.cuda.is_available()
+def get_available_device():
+    if torch.cuda.is_available():
+        return 'cuda'
+    else:
+        return 'cpu'
 
 def load_whisper(model="tiny"):
     global whisper_model
-    whisper_model = whisper.load_model(model, device="cuda" if is_cuda_available() else "cpu")
-    print("Whisper模型："+model)
+    device = get_available_device()
+    whisper_model = whisper.load_model(model, device=device)
+    print(f"Whisper模型：{model}")
+    print(f"使用了{device.upper()}计算单元提取，您的电脑{'可用显卡加速' if device != 'cpu' else '不支持显卡加速'}")
 
 def run_analysis(filename, model="tiny", prompt="以下是普通话的句子。"):
     global whisper_model
@@ -32,4 +39,3 @@ def run_analysis(filename, model="tiny", prompt="以下是普通话的句子。"
             f.write("".join([i["text"] for i in result["segments"] if i is not None]))
             f.write("\n")
         i += 1
-    
