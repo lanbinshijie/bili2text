@@ -91,7 +91,7 @@ print("转换完成！", output_path)
 
 ## Star History ⭐
 
-<img src="https://github.com/user-attachments/assets/fd16f703-68b5-463d-abca-4ce6d627bd98" width="600">
+[![Star History Chart](https://api.star-history.com/svg?repos=lanbinshijie/bili2text&type=Date)](https://star-history.com/#lanbinshijie/bili2text&Date)
 
 
 ## 许可证 📄
