@@ -98,8 +98,13 @@ print("转换完成！", output_path)
 ## 贡献 💡
 如果你想为这个项目做出贡献，欢迎提交 Pull Request 或创建 Issue。
 
-投喂作者！（结尾WoqLanbin，TRC20）
+## 投喂一下！
+
 > TKTg2T7u7xdV4xDAzbzird2qmWoqLanbin
+
+![image](https://github.com/user-attachments/assets/412470b8-7fd5-4632-a085-9c48a9d5e18b)
+
+TRC20链！谢谢大家！
 
 ## 致谢 🙏
 再此感谢Open Teens对青少年开源社区做出的贡献！[@OpenTeens](https://openteens.org)
