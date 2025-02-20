@@ -6,6 +6,14 @@ HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36
 
 start_time = 0
 
+def check_folder():
+    # 检查文件夹是否被创建：
+    if not os.path.exists("bilibili_video"):
+        os.makedirs("bilibili_video")
+
+    if not os.path.exists("outputs"):
+        os.makedirs("outputs")
+
 def download_video(bv_number):
     try:
         # Step 1: 请求元数据，使用了zhouql.vip的接口，感谢！
@@ -41,7 +49,8 @@ def download_video(bv_number):
         video_response = requests.get(video_url, stream=True, headers=HEADERS)
         
         # 定义保存视频的文件名
-        file_name = fr"bilibili_video\{bv_number}.mp4"
+        check_folder()
+        file_name = fr"bilibili_video/{bv_number}.mp4"
         
         # 获取总大小
         total_size = int(video_response.headers.get('content-length', 0))
