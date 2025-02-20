@@ -173,3 +173,6 @@ audio/
 # Temp folder
 outputs
 outputs/
+
+# Executable files
+*.exe
