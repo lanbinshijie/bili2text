@@ -49,8 +49,11 @@ def create_app(language: str = DEFAULT_LANGUAGE) -> typer.Typer:
         prompt: str = typer.Option("", "--prompt", help=tr(language, "opt_prompt_help")),
         output: Path | None = typer.Option(None, "--output", help=tr(language, "opt_output_help")),
         workspace: Path | None = typer.Option(None, "--workspace", help=tr(language, "opt_workspace_help")),
+        keep_video: bool = typer.Option(False, "--keep-video", help=tr(language, "opt_keep_video_help")),
     ) -> None:
         """Download or open media, then transcribe it with the selected provider."""
+        if keep_video:
+            os.environ["B2T_KEEP_VIDEO"] = "1"
         try:
             settings, config = _load_runtime(workspace=workspace, provider=provider, model=model)
             renderer = TqdmTaskRenderer(config.language)
@@ -91,8 +94,11 @@ def create_app(language: str = DEFAULT_LANGUAGE) -> typer.Typer:
         model: str | None = typer.Option(None, "--model", help=tr(language, "opt_model_help")),
         prompt: str = typer.Option("", "--prompt", help=tr(language, "opt_prompt_help")),
         workspace: Path | None = typer.Option(None, "--workspace", help=tr(language, "opt_workspace_help")),
+        keep_video: bool = typer.Option(False, "--keep-video", help=tr(language, "opt_keep_video_help")),
     ) -> None:
         """Submit multiple transcription tasks from arguments or a newline-separated file."""
+        if keep_video:
+            os.environ["B2T_KEEP_VIDEO"] = "1"
         selected_language = _detect_preferred_language(workspace)
         try:
             settings, config = _load_runtime(workspace=workspace, provider=provider, model=model)
