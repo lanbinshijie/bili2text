@@ -49,10 +49,14 @@ def create_app(language: str = DEFAULT_LANGUAGE) -> typer.Typer:
         prompt: str = typer.Option("", "--prompt", help=tr(language, "opt_prompt_help")),
         output: Path | None = typer.Option(None, "--output", help=tr(language, "opt_output_help")),
         workspace: Path | None = typer.Option(None, "--workspace", help=tr(language, "opt_workspace_help")),
+        workers: int | None = typer.Option(None, "--workers", help=tr(language, "opt_workers_help")),
     ) -> None:
         """Download or open media, then transcribe it with the selected provider."""
         try:
             settings, config = _load_runtime(workspace=workspace, provider=provider, model=model)
+            if workers is not None:
+                # only MiMo splits audio into chunks and runs them in parallel today
+                config.mimo.workers = max(1, workers)
             renderer = TqdmTaskRenderer(config.language)
             service = _build_task_service(
                 settings=settings,
